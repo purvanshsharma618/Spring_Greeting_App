@@ -1,5 +1,6 @@
 package com.example.GreetingApp.controller;
 
+import com.example.GreetingApp.dto.GreetingRequest;
 import com.example.GreetingApp.service.GreetingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,4 +55,13 @@ public class GreetingController {
         response.put("message", greetingService.getGreetingMessage());
         return ResponseEntity.ok(response);
     }
+
+    //UC3
+      @PostMapping
+     public ResponseEntity<Map<String, String>> postGreetings(@RequestBody GreetingRequest greetingRequest) {
+      Map<String, String> response = new HashMap<>();
+       response.put("Message", "Hello " + greetingRequest.getFirstName()+ " " + greetingRequest.getLastName());
+        return ResponseEntity.ok(response);
+   }
+
 }
