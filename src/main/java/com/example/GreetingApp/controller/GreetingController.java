@@ -1,5 +1,6 @@
 package com.example.GreetingApp.controller;
 
+import com.example.GreetingApp.service.GreetingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,31 +11,17 @@ import java.util.Map;
 @RequestMapping("/greeting")
 public class GreetingController {
 
+    private final GreetingService greetingService;
+
+    // Constructor Injection
+    public GreetingController(GreetingService greetingService) {
+        this.greetingService = greetingService;
+    }
+
     @GetMapping
     public ResponseEntity<Map<String, String>> getGreeting() {
         Map<String, String> response = new HashMap<>();
-        response.put("message", "Hello from GET method!");
-        return ResponseEntity.ok(response);
-    }
-
-    @PostMapping
-    public ResponseEntity<Map<String, String>> postGreeting() {
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Hello from POST method!");
-        return ResponseEntity.ok(response);
-    }
-
-    @PutMapping
-    public ResponseEntity<Map<String, String>> putGreeting() {
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Hello from PUT method!");
-        return ResponseEntity.ok(response);
-    }
-
-    @DeleteMapping
-    public ResponseEntity<Map<String, String>> deleteGreeting() {
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Hello from DELETE method!");
+        response.put("message", greetingService.getGreetingMessage());
         return ResponseEntity.ok(response);
     }
 }
