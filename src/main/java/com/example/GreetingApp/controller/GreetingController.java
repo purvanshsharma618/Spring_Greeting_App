@@ -1,7 +1,10 @@
 package com.example.GreetingApp.controller;
 
+import com.example.GreetingApp.dto.GreetingDTO;
 import com.example.GreetingApp.dto.GreetingRequest;
+import com.example.GreetingApp.entity.GreetingEntity;
 import com.example.GreetingApp.service.GreetingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +23,7 @@ public class GreetingController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping
+    @PostMapping("/uc1")
     public ResponseEntity<Map<String, String>> postGreeting() {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Hello from POST method!");
@@ -42,14 +45,16 @@ public class GreetingController {
 }
 
     //UC2
+
     private final GreetingService greetingService;
 
     // Constructor Injection
+    @Autowired
     public GreetingController(GreetingService greetingService) {
         this.greetingService = greetingService;
     }
 
-    @GetMapping
+    @GetMapping("/uc2")
     public ResponseEntity<Map<String, String>> getGreetings() {
         Map<String, String> response = new HashMap<>();
         response.put("message", greetingService.getGreetingMessage());
@@ -63,5 +68,14 @@ public class GreetingController {
        response.put("Message", "Hello " + greetingRequest.getFirstName()+ " " + greetingRequest.getLastName());
         return ResponseEntity.ok(response);
    }
+
+
+   //UC-04
+   @PostMapping("/add")
+   public GreetingEntity greeting(@RequestBody GreetingDTO greetingDTO){
+       return greetingService.saveGreeting(greetingDTO.getMessage());
+   }
+
+
 
 }
