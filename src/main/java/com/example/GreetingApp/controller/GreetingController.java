@@ -57,7 +57,7 @@ public class GreetingController {
     @GetMapping("/uc2")
     public ResponseEntity<Map<String, String>> getGreetings() {
         Map<String, String> response = new HashMap<>();
-        response.put("message", greetingService.getGreetingMessage());
+        response.put("message", greetingService.getGreeting());
         return ResponseEntity.ok(response);
     }
 
@@ -75,7 +75,11 @@ public class GreetingController {
    public GreetingEntity greeting(@RequestBody GreetingDTO greetingDTO){
        return greetingService.saveGreeting(greetingDTO.getMessage());
    }
-
+    //UC-05
+    @GetMapping("/{id}")
+    public String greeting(@PathVariable long id){
+        return (greetingService.getMessageById(id)).getMessage();
+    }
 
 
 }
