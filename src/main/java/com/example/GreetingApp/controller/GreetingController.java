@@ -78,10 +78,10 @@ public class GreetingController {
         return ResponseEntity.ok(greetingService.getAllMessage());
     }
 
-    // UC6 (Alternative Post) - Returns a DTO Instead of Entity
-    @PostMapping("/uc6")
-    public ResponseEntity<GreetingDTO> createGreeting(@RequestBody GreetingRequest greetingRequest) {
-        String fullName = greetingRequest.getFirstName() + " " + greetingRequest.getLastName();
-        return ResponseEntity.ok(new GreetingDTO("Hello " + fullName));
+    //UC7 : Edit Message
+    @PutMapping("/{id}")
+    public ResponseEntity<GreetingEntity> updateGreeting(@PathVariable Long id, @RequestBody GreetingDTO greetingDTO) {
+        GreetingEntity updatedGreeting = greetingService.updateGreeting(id, greetingDTO.getMessage());
+        return ResponseEntity.ok(updatedGreeting);
     }
 }
